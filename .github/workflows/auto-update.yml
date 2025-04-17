@@ -12,5 +12,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 'current'
+      - run: git config --global user.name "auto-update" && git config --global user.email "auto-update@example.com"
       - run: npm ci
       - run: npm run update
