@@ -9,7 +9,9 @@ const execProm = promisify(exec);
 const newData = await fetchData();
 const currentData = JSON.parse(await fs.readFile("./data.json", "utf8"));
 
-if (!isDeepStrictEqual(newData, currentData)) {
+// stringify -> parse so that it gets rid of json problems
+// such as no support for undefined
+if (!isDeepStrictEqual(JSON.parse(JSON.stringify(newData)), currentData)) {
 	await fs.writeFile("./data.json", JSON.stringify(newData, undefined, 4));
 	await execProm("git add .");
 	await execProm(`git commit -m "update data.json"`);
